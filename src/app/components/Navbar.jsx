@@ -8,7 +8,11 @@ const Navbar = () => {
       <h2 className="text-2xl font-bold">Amazing Cart</h2>
       <nav className="flex items-center gap-5">
         <Link href="/">Home</Link>
+        <Link href="/products">Products</Link>
         <Link href="/shop">Shop</Link>
+        <Link href="/shop/category">Category</Link>
+        <Link href="/login">Login</Link>
+        <Link href="/signup">Signup</Link>
       </nav>
     </header>
   );
