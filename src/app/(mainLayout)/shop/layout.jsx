@@ -4,7 +4,7 @@ import React from "react";
 const ShopLayout = ({ children }) => {
   return (
     <div className="flex gap-2">
-      <aside className="w-60 bg-blue-300 h-screen">
+      <aside className="min-w-60 max-w-60 bg-blue-300 h-screen">
         <Link href={"/"}>Home</Link>
       </aside>
       <main>{children}</main>
