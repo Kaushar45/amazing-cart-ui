@@ -6,27 +6,30 @@ import Link from "next/link";
 export default function ProductCard({ product }) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      {/* Product Image */}
       <div className="relative">
         <img
           src={product.thumbnail}
           alt="Product Image"
           className="w-full h-64 object-cover"
         />
-
+        {/* Discount Tag */}
         <div className="absolute top-0 right-0 bg-red-500 text-white font-semibold py-1 px-3 rounded-bl-lg">
           {product.discount}% OFF
         </div>
       </div>
 
+      {/* Product Details */}
       <div className="p-4">
         <Link
-          href={`/products/${product.product_id}`}
+          href={`/products/${product.slug}`}
           className="text-lg font-semibold text-gray-800"
         >
           {product.product_name}
         </Link>
         <p className="text-sm text-gray-600 mt-1">{product.meta_description}</p>
 
+        {/* Price */}
         <div className="mt-3 flex items-center">
           <span className="text-xl font-bold text-gray-900">
             {" "}

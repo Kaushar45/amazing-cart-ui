@@ -9,14 +9,14 @@ const HomePage = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${baseURL}/products/public?limit=20&page=1`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await getProducts();
 
       const data = await res.json();
+      if (data.error) {
+        alert(data.message);
+        return;
+      }
+
       console.log(data);
       setProducts(data);
     } catch (error) {
