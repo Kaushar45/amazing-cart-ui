@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProductDetails } from "@/utils/apiClient";
+import { getProductDetails } from "../../../../utils/apiClient";
 import { useParams } from "next/navigation";
-import { paiseToRupee } from "@/utils/calculation";
+import { paiseToRupee } from "../../../../utils/calculation";
 
 const ProductDetailsPage = () => {
   const [productDetails, setProductDetails] = useState({});
@@ -51,7 +51,7 @@ const ProductDetailsPage = () => {
       )}
       <div>
         <h1 className="font-medium text-3xl">{productDetails.name}</h1>
-        <p>{productDetails.description}</p>
+        <p className="overflow-hidden">{productDetails.description}</p>
         {productDetails.variants && (
           <div className="mt-5">
             <h3 className="text-xl font-semibold">Varients</h3>

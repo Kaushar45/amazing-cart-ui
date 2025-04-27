@@ -1,7 +1,13 @@
 "use client";
+import { useGlobalContext } from "../../../context/GlobalContext";
 import React from "react";
 
 const loginPage = () => {
+  const { setIsLogin } = useGlobalContext();
+  const login = () => {
+    console.log("You are Log in Now");
+    setIsLogin(true);
+  };
   return (
     <>
       <form
@@ -26,7 +32,7 @@ const loginPage = () => {
           />
           <button
             className="rounded-2xl bg-[#03335f1d]  outline-neutral-50 px-4 text-lg"
-            type="submit"
+            onClick={login}
           >
             Login
           </button>

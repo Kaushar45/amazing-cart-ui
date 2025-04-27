@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const Navbar = () => {
-  const d = useGlobalContext();
-  console.log(d);
+  const { isLogin } = useGlobalContext();
+
   return (
     <header className="flex justify-between items-center gap-2 px-6 h-15 bg-blue-400 text-blue-50">
       <h2 className="text-2xl font-bold">Amazing Cart</h2>
@@ -13,14 +13,14 @@ const Navbar = () => {
         <Link href="/">Home</Link>
         <Link href="/products">Products</Link>
         <Link href="/shop">Shop</Link>
-        {/* {!isLogin ? (
+        {!isLogin ? (
           <>
             <Link href="/login">Login</Link>
             <Link href="/signup">Signup</Link>
           </>
         ) : (
           <button>Account</button>
-        )} */}
+        )}
       </nav>
     </header>
   );

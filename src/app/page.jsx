@@ -1,33 +1,40 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { baseURL, getProducts } from "../utils/apiClient";
+import ProductCard from "./components/Card";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(
-          "https://api.store.inflection.org.in/products/public?limit=20"
-        );
-        const data = await res.json();
-        setProducts(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
+
+  const fetchProducts = async () => {
+    try {
+      const res = await getProducts();
+
+      const data = await res.json();
+      if (data.error) {
+        alert(data.message);
+        return;
       }
-    };
+
+      console.log(data);
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
     fetchProducts();
   }, []);
+
   return (
-    <div className="grid grid-cols-4 gap-4 p-5">
-      {products.map((products) => (
-        <div key={products.product_code}>
-          <img src={products.thumbnail} />
-          <h1>{products.product_name}</h1>
-          <h3 className="font-bold"> ₹{products.price}</h3>
-        </div>
-      ))}
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {products.map((product) => (
+          <ProductCard product={product} />
+        ))}
+      </div>
     </div>
   );
 };
