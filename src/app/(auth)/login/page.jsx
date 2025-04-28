@@ -8,6 +8,7 @@ const loginPage = () => {
     console.log("You are Log in Now");
     setIsLogin(true);
   };
+
   return (
     <>
       <form
@@ -38,6 +39,12 @@ const loginPage = () => {
           </button>
         </div>
       </form>
+      <button
+        className="rounded-2xl bg-[#03335f1d]  outline-neutral-50 px-4 text-lg"
+        onClick={login}
+      >
+        Login
+      </button>
     </>
   );
 };
