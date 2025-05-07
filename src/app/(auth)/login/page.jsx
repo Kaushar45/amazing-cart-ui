@@ -3,7 +3,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { useGlobalContext } from "../../../context/GlobalContext";
 import React, { useState } from "react";
 import Link from "next/link";
-import Link from "next/link";
 
 const loginPage = () => {
   const router = useState();
@@ -18,16 +17,32 @@ const loginPage = () => {
     return false;
   };
 
-  const login = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("You are Log in Now");
+    try {
+      const res = await login({ email, password });
+      const data = await res.json();
+      console.log(data);
+      if (data.error) {
+        alert(data.message);
+        return;
+      }
+      setCookie("access_token", data.access_token);
+      setCookie("refresh_token", data.refresh_token);
+      setIsLogin(true);
+      setEmail("");
+      setPassword("");
+      router.push("/");
+    } catch (error) {
+      console.log();
+    }
   };
 
   return (
     <>
       <form
         className="grid items-center justify-center gap-5 bg-[url('https://images.unsplash.com/photo-1699462515761-90db271d77c8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center h-screen "
-        onSubmit={login}
+        onSubmit={handleLogin}
       >
         <div className="grid items-center justify-center gap-5 px-6 py-6 rounded-xl  border-1 border-gray-500 bg-[#9595951d] shadow-2xl">
           <h1 className="text-2xl font-bold text-blue-950">User Login</h1>
@@ -38,6 +53,7 @@ const loginPage = () => {
             placeholder="Username"
             name="Username"
             type="email"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <div className="relative">
@@ -46,6 +62,7 @@ const loginPage = () => {
               required
               placeholder="Password"
               name="password"
+              value={password}
               type={isPassword ? "password" : "text"}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -75,7 +92,6 @@ const loginPage = () => {
                 ? "bg-gray-300 text-gray-100 "
                 : "bg-[#03335f1d] duration-200 hover:bg-[#13212f1d]"
             }rounded-2xl cursor-pointer outline-neutral-50 px-4 text-lg`}
-            onClick={login}
           >
             Login
           </button>
@@ -87,12 +103,6 @@ const loginPage = () => {
           </p>
         </div>
       </form>
-      <button
-        className="rounded-2xl bg-[#03335f1d]  outline-neutral-50 px-4 text-lg"
-        onClick={login}
-      >
-        Log In
-      </button>
     </>
   );
 };

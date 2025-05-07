@@ -4,7 +4,13 @@ import Link from "next/link";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const Navbar = () => {
-  const { isLogin } = useGlobalContext();
+  const { isLogin, setIsLogin } = useGlobalContext();
+
+  const handleLaogout = () => {
+    deleteCookie("access_token");
+    deleteCookie("refresh_token");
+    setIsLogin(false);
+  };
 
   return (
     <header className="flex justify-between items-center gap-2 px-6 h-15 bg-blue-400 text-blue-50">
@@ -19,7 +25,10 @@ const Navbar = () => {
             <Link href="/signup">Signup</Link>
           </>
         ) : (
-          <button>Account</button>
+          <div className="flex gap-2 items-center">
+            <button>Account</button>
+            <button onClick={handleLaogout}>Log out</button>
+          </div>
         )}
       </nav>
     </header>

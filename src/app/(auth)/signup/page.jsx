@@ -1,16 +1,15 @@
-("use client");
+"use client";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "../../../context/GlobalContext";
 import Link from "next/link";
 import { useState } from "react";
+import { signup } from "../../../utils/apiClient";
 
 const signupPage = () => {
   const router = useRouter();
   const { setIsLogin } = useGlobalContext();
-
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
-
   const enableDisableBtn = () => {
     if (!email.length || !fullName.length) {
       return true;
@@ -18,55 +17,74 @@ const signupPage = () => {
     return false;
   };
 
-  const signup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    console.log("Account Created");
+    try {
+      const res = await signup({
+        email: email,
+        full_name: fullName,
+        reset_password_ui_url: "http://localhost:3000/reset_password",
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.error) {
+        alert(data.mesage);
+        return;
+      }
+      setEmail("");
+      setFullName("");
+      alert(data.message);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
-    <div className="h-screen w-full flex justify-center items-center">
+    <>
       <form
-        onSubmit={signup}
-        className="max-w-sm w-full rounded border border-gray-400 grid gap-2 p-4"
+        onSubmit={handleSignup}
+        className="grid items-center justify-center gap-5 bg-[url('https://images.unsplash.com/photo-1699462515761-90db271d77c8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center h-screen "
       >
-        <h1 className="text-center mb-5 font-semibold text-3xl">
-          Create Account
-        </h1>
+        <div className="grid items-center justify-center gap-5 px-6 py-6 rounded-xl  border-1 border-gray-500 bg-[#9595951d] shadow-2xl">
+          <h1 className="text-2xl font-bold text-blue-950">Create Account</h1>
 
-        <input
-          type="text"
-          required
-          placeholder="Your Name"
-          className="border outline-none rounded px-2 py-1.5 w-full"
-          onChange={(e) => setFullName(e.target.value)}
-        />
+          <input
+            type="text"
+            required
+            placeholder="Your Name"
+            value={fullName}
+            className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
+            onChange={(e) => setFullName(e.target.value)}
+          />
 
-        <input
-          type="email"
-          required
-          placeholder="email"
-          className="border outline-none rounded px-2 py-1.5"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <input
+            type="email"
+            required
+            placeholder="Email"
+            className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <button
-          type="submit"
-          disabled={enableDisableBtn() ? true : false}
-          className={`${
-            enableDisableBtn()
-              ? "bg-gray-300 text-gray-100 "
-              : "bg-blue-700 text-gray-100 duration-200 hover:bg-blue-800"
-          }px-2 py-1.5 rounded cursor-pointer`}
-        >
-          Sign up
-        </button>
-        <p className="text-sm">
-          Already have an account?
-          <Link href="/login" className="text-blue-500">
-            login
-          </Link>
-        </p>
+          <button
+            type="submit"
+            disabled={enableDisableBtn() ? true : false}
+            className={`${
+              enableDisableBtn()
+                ? "bg-gray-300 text-gray-100 "
+                : "bg-[#03335f1d] duration-200 hover:bg-[#13212f1d]"
+            }rounded-2xl cursor-pointer outline-neutral-50 px-4 text-lg`}
+          >
+            Sign up
+          </button>
+          <p className="text-sm">
+            Already have an account?
+            <Link href="/login" className="text-blue-500">
+              login
+            </Link>
+          </p>
+        </div>
       </form>
-    </div>
+    </>
   );
 };
 
