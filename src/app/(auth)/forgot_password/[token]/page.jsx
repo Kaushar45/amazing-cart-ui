@@ -1,9 +1,9 @@
 "use client";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
-import { resetPassword } from "../../../../utils/apiClient";
+import { resetPassword } from "../../../utils/apiClient";
 
-const ResetPasswordPage = () => {
+const ForgotPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { token } = useParams();
@@ -48,7 +48,7 @@ const ResetPasswordPage = () => {
           required
           value={password}
           placeholder="New Password"
-          className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
+          className="border outline-none rounded px-2 py-1.5"
           onChange={(e) => setPassword(e.target.value)}
         />
         <input
@@ -56,7 +56,7 @@ const ResetPasswordPage = () => {
           required
           value={confirmPassword}
           placeholder="Confirm New Password"
-          className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
+          className="border outline-none rounded px-2 py-1.5"
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
@@ -66,8 +66,8 @@ const ResetPasswordPage = () => {
           className={`${
             enableDisableBtn()
               ? "bg-gray-300 text-gray-100 "
-              : "bg-[#03335f1d] text-gray-100 duration-200 hover:bg-[#141c241d]"
-          }   rounded-2xl px-4 text-lg cursor-pointer`}
+              : "bg-blue-700 text-gray-100 duration-200 hover:bg-blue-800"
+          }px-2 py-1.5 rounded cursor-pointer`}
         >
           Save Password
         </button>
@@ -76,4 +76,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default ForgotPassword;

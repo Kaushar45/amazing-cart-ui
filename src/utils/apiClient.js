@@ -22,6 +22,15 @@ export const signup = async (payload) => {
   });
 };
 
+export const resetPassword = async (payload, token) => {
+  return await fetch(`${baseURL}/users/reset_password/${token}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+};
 // --------------- Products Fetching ------------
 
 export const getProducts = async (filter = "limit=20&page=1") => {
