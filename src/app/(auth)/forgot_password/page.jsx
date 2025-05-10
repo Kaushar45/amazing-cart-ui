@@ -1,17 +1,14 @@
 "use client";
-import { useParams } from "next/navigation";
+import { forgotPassword } from "../../../utils/apiClient";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { resetPassword } from "../../../utils/apiClient";
 
 const ForgotPassword = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const { token } = useParams();
-
-  console.log(token);
+  const router = useRouter();
+  const [email, setEmail] = useState("");
 
   const enableDisableBtn = () => {
-    if (!password.length || !confirmPassword.length) {
+    if (!email.length) {
       return true;
     }
     return false;
@@ -21,58 +18,54 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     try {
-      const res = await resetPassword({ password }, decodeURIComponent(token));
+      const res = await forgotPassword({
+        email: email,
+        reset_password_ui_url: "http://localhost:3000/reset_password",
+      });
       const data = await res.json();
       console.log(data);
       if (data.error) {
         alert(data.message);
+        return;
       }
 
       alert(data.message);
+      setEmail("");
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="h-screen w-full flex justify-center items-center">
-      <form
-        onSubmit={handleResetPassword}
-        className="max-w-sm w-full rounded border border-gray-400 grid gap-2 p-4"
-      >
-        <h1 className="text-center mb-5 font-semibold text-3xl">
-          Reset Password
-        </h1>
-        <input
-          type="password"
-          required
-          value={password}
-          placeholder="New Password"
-          className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          required
-          value={confirmPassword}
-          placeholder="Confirm New Password"
-          className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+    <form
+      onSubmit={handleResetPassword}
+      className="max-w-sm w-full rounded border border-gray-400 grid gap-2 p-4"
+    >
+      <h1 className="text-center mb-5 font-semibold text-3xl">
+        Forgot Password
+      </h1>
+      <input
+        type="email"
+        required
+        value={email}
+        placeholder="Email"
+        className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
+        onChange={(e) => setEmail(e.target.value)}
+      />
 
-        <button
-          type="submit"
-          disabled={enableDisableBtn() ? true : false}
-          className={`${
-            enableDisableBtn()
-              ? "bg-gray-300 text-gray-100 "
-              : "bg-blue-700 text-gray-100 duration-200 hover:bg-blue-800"
-          }   rounded-2xl px-4 text-lg bg-[#03335f1d]  cursor-pointer`}
-        >
-          Save Password
-        </button>
-      </form>
-    </div>
+      <button
+        type="submit"
+        disabled={enableDisableBtn() ? true : false}
+        className={`${
+          enableDisableBtn()
+            ? "bg-gray-300 text-gray-100 "
+            : "bg-[#03335f1d] duration-200 hover:bg-[#13212f1d]"
+        }rounded-2xl cursor-pointer outline-neutral-50 px-4 text-lg`}
+      >
+        submit
+      </button>
+    </form>
   );
 };
 
