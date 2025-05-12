@@ -1,8 +1,10 @@
 "use client";
+
 import { Eye, EyeOff } from "lucide-react";
 import { useGlobalContext } from "../../../context/GlobalContext";
 import React, { useState } from "react";
 import Link from "next/link";
+import { apiClient } from "../../../utils/apiClient";
 
 const loginPage = () => {
   const router = useState();
@@ -20,8 +22,10 @@ const loginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await login({ email, password });
-      const data = await res.json();
+      const data = await apiClient.login({
+        email: email,
+        password: password,
+      });
       console.log(data);
       if (data.error) {
         alert(data.message);

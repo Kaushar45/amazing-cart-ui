@@ -29,12 +29,10 @@ function checkLogin() {
   }
 }
 
-// Example: Login and set a cookie
 function login(username) {
-  setCookie("username", username, 7); // Cookie valid for 7 days
+  setCookie("username", username, 7);
   alert("Login successful! Welcome, " + username);
 }
 
-// Example usage
-login("JohnDoe"); // Simulate login
-checkLogin(); // Check login status
+login("JohnDoe");
+checkLogin();
