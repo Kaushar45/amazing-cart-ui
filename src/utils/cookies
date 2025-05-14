@@ -1,5 +1,5 @@
 // Function to set a cookie
-function setCookie(name, value, days = 3600) {
+export function setCookie(name, value, days = 3600) {
   const date = new Date();
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
   const expires = "expires=" + date.toUTCString();
@@ -7,7 +7,7 @@ function setCookie(name, value, days = 3600) {
 }
 
 // Function to get a cookie by name
-function getCookie(name) {
+export function getCookie(name) {
   const nameEQ = name + "=";
   const cookies = document.cookie.split(";");
   for (let i = 0; i < cookies.length; i++) {
@@ -29,10 +29,7 @@ function checkLogin() {
   }
 }
 
-function login(username) {
+export function login(username) {
   setCookie("username", username, 7);
   alert("Login successful! Welcome, " + username);
 }
-
-login("JohnDoe");
-checkLogin();

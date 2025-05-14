@@ -1,5 +1,5 @@
 "use client";
-import { forgotPassword } from "../../../utils/apiClient";
+import { apiClient, forgotPassword } from "../../../utils/apiClient";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -18,11 +18,10 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     try {
-      const res = await forgotPassword({
+      const data = await apiClient.forgotPassword({
         email: email,
         reset_password_ui_url: "http://localhost:3000/reset_password",
       });
-      const data = await res.json();
       console.log(data);
       if (data.error) {
         alert(data.message);

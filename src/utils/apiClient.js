@@ -1,3 +1,4 @@
+"use client";
 import { getCookie } from "./cookies";
 
 export const baseURL = "https://api.store.inflection.org.in";
@@ -39,7 +40,11 @@ export const apiClient = async (url, method, body = null, tokenName = "") => {
 
 // Auth APIs
 apiClient.login = (payload) => apiClient("/users/login", "POST", payload);
-
+apiClient.signup = (payload) => apiClient("/users/signup", "POST", payload);
+apiClient.resetPassword = (token, payload) =>
+  apiClient(`/users/reset_password/${token}`, "PATCH", payload);
+apiClient.forgotPassword = (payload) =>
+  apiClient("/users/forgot_password", "POST", payload);
 // User APIs
 apiClient.fetchMyProfile = () => apiClient("/users/profiles/my", "GET");
 

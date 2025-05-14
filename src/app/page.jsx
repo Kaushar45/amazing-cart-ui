@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { apiClient, baseURL, getProducts } from "../utils/apiClient";
+import { apiClient } from "../utils/apiClient";
 import ProductCard from "./components/Card";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getProfile = async () => {
     try {
@@ -17,23 +19,47 @@ const HomePage = () => {
   };
 
   const fetchProducts = async () => {
+    setLoading(true);
     try {
       const data = await apiClient.getProducts();
-      console.log(data);
       if (data.error) {
         alert(data.message);
+        setLoading(false);
         return;
       }
 
       console.log(data);
       setProducts(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      alert("Somthing went wrong");
+    }
+  };
+
+  const fetchCategories = async () => {
+    setLoading(true);
+    try {
+      const data = await apiClient.fetchCategories();
+      if (data.error) {
+        alert(data.message);
+        setLoading(false);
+        return;
+      }
+      console.log(data);
+      setCategories(data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      alert("Something went wrong");
     }
   };
 
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
 
   return (
