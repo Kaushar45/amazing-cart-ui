@@ -4,12 +4,18 @@ import { useGlobalContext } from "../../../context/GlobalContext";
 import Link from "next/link";
 import { useState } from "react";
 import { apiClient, signup } from "../../../utils/apiClient";
-
+import { validateEmail, validateName } from "../../../utils/validateFormFields";
 const signupPage = () => {
   const router = useRouter();
   const { setIsLogin } = useGlobalContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
+  const [error, setError] = useState("");
+  const [validationError, setValidationError] = useState({
+    email: "",
+    fullName: "",
+  });
   const enableDisableBtn = () => {
     if (!email.length || !fullName.length) {
       return true;
@@ -19,6 +25,28 @@ const signupPage = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    setValidationError({ email: "", fullName: "" });
+
+    if (!validateEmail(email)) {
+      setValidationError((prev) => ({
+        ...prev,
+        email: "Please enter a valid email address",
+      }));
+      setIsLoading(false);
+      return;
+    }
+
+    if (!validateName(fullName)) {
+      setValidationError((prev) => ({
+        ...prev,
+        fullName: "Please provide a valid name",
+      }));
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const data = await apiClient.signup({
         email: email,
@@ -27,14 +55,18 @@ const signupPage = () => {
       });
       console.log(data);
       if (data.error) {
-        alert(data.mesage);
+        setIsLoading(false);
+        setError(data.message);
         return;
       }
       setEmail("");
       setFullName("");
+      setIsLoading(false);
       alert(data.message);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
+      setError("Something went Wrong");
     }
   };
 
@@ -46,7 +78,9 @@ const signupPage = () => {
       >
         <div className="grid items-center justify-center gap-5 px-6 py-6 rounded-xl  border-1 border-gray-500 bg-[#9595951d] shadow-2xl">
           <h1 className="text-2xl font-bold text-blue-950">Create Account</h1>
-
+          {error && (
+            <p className="text-sm text-red-500 text-center mt-1">{error}</p>
+          )}
           <input
             type="text"
             required
@@ -55,6 +89,9 @@ const signupPage = () => {
             className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
             onChange={(e) => setFullName(e.target.value)}
           />
+          {validationError.fullName && (
+            <p className="text-sm text-red-500">{validationError.fullName}</p>
+          )}
 
           <input
             type="email"
@@ -63,7 +100,9 @@ const signupPage = () => {
             className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
             onChange={(e) => setEmail(e.target.value)}
           />
-
+          {validationError.email && (
+            <p className="text-sm text-red-500">{validationError.email}</p>
+          )}
           <button
             type="submit"
             disabled={enableDisableBtn() ? true : false}
@@ -71,9 +110,17 @@ const signupPage = () => {
               enableDisableBtn()
                 ? "bg-gray-300 text-gray-100 "
                 : "bg-[#03335f1d] duration-200 hover:bg-[#13212f1d]"
-            }rounded-2xl cursor-pointer outline-neutral-50 px-4 text-lg`}
+            }rounded-2xl cursor-pointer outline-neutral-50 px-4 text-lg flex items-center justify-center`}
           >
             Sign up
+            {isLoading ? (
+              <svg
+                className="animate-spin h-8 w-8 border-t-transparent border-2 rounded-full"
+                viewBox="0 0 24 24"
+              ></svg>
+            ) : (
+              "Sign up"
+            )}
           </button>
           <p className="text-sm">
             Already have an account?

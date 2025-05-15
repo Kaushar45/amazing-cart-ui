@@ -5,6 +5,10 @@ import { useGlobalContext } from "../../../context/GlobalContext";
 import React, { useState } from "react";
 import Link from "next/link";
 import { apiClient } from "../../../utils/apiClient";
+import {
+  validateEmail,
+  validatePassword,
+} from "../../../utils/validateFormField";
 
 const loginPage = () => {
   const router = useState();
@@ -26,15 +30,6 @@ const loginPage = () => {
     return false;
   };
 
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
-
-  const validatePassword = (password) => {
-    const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    return re.test(password);
-  };
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
