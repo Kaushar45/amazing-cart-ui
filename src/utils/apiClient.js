@@ -45,6 +45,10 @@ apiClient.resetPassword = (token, payload) =>
   apiClient(`/users/reset_password/${token}`, "PATCH", payload);
 apiClient.forgotPassword = (payload) =>
   apiClient("/users/forgot_password", "POST", payload);
+
+apiClient.refreshAccessToken = () =>
+  apiClient("/users/renew_token", "GET", null, "refresh_token");
+
 // User APIs
 apiClient.fetchMyProfile = () => apiClient("/users/profiles/my", "GET");
 
