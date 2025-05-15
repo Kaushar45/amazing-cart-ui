@@ -61,6 +61,7 @@ const loginPage = () => {
       console.log(data);
       if (data.error) {
         setError(data.message);
+        setIsLoading(false);
         return;
       }
       setCookie("access_token", data.access_token);
