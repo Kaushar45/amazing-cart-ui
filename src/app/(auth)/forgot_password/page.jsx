@@ -2,7 +2,7 @@
 import { apiClient } from "../../../utils/apiClient";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { validateEmail } from "../../../utils/validateFormFields";
+import { validateEmail } from "../../../utils/validateFormField";
 const ForgotPassword = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +55,7 @@ const ForgotPassword = () => {
   return (
     <form
       onSubmit={handleResetPassword}
-      className="max-w-sm w-full rounded border border-gray-400 grid gap-2 p-4"
+      className="grid items-center justify-center max-w-sm w-full rounded border border-gray-400  gap-2 p-4"
     >
       <h1 className="text-center mb-5 font-semibold text-3xl">
         Forgot Password
@@ -83,7 +83,6 @@ const ForgotPassword = () => {
             : "bg-[#03335f1d] duration-200 hover:bg-[#13212f1d]"
         }rounded-2xl cursor-pointer outline-neutral-50 px-4 text-lg flex justify-center items-center`}
       >
-        submit
         {isLoading ? (
           <svg
             className="animate-spin h-8 w-8 border-t-transparent border-2 rounded-full"

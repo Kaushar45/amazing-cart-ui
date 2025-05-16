@@ -5,7 +5,7 @@ const MainLayout = ({ children }) => {
     <>
       {/* <Navbar /> */}
 
-      <main>{children}</main>
+      <main className="mt-16">{children}</main>
     </>
   );
 };

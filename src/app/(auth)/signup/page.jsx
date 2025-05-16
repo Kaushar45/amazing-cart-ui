@@ -4,7 +4,8 @@ import { useGlobalContext } from "../../../context/GlobalContext";
 import Link from "next/link";
 import { useState } from "react";
 import { apiClient, signup } from "../../../utils/apiClient";
-import { validateEmail, validateName } from "../../../utils/validateFormFields";
+import { validateEmail, validateName } from "../../../utils/validateFormField";
+
 const signupPage = () => {
   const router = useRouter();
   const { setIsLogin } = useGlobalContext();
@@ -112,7 +113,6 @@ const signupPage = () => {
                 : "bg-[#03335f1d] duration-200 hover:bg-[#13212f1d]"
             }rounded-2xl cursor-pointer outline-neutral-50 px-4 text-lg flex items-center justify-center`}
           >
-            Sign up
             {isLoading ? (
               <svg
                 className="animate-spin h-8 w-8 border-t-transparent border-2 rounded-full"

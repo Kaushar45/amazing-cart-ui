@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { apiClient } from "../utils/apiClient";
 import ProductCard from "./components/Card";
-
+import Link from "next/link";
 const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -67,7 +67,12 @@ const HomePage = () => {
           <ul className="list-disc">
             {categories.map((category) => (
               <li key={category.id} className="text-lg">
-                {category.name}
+                <Link
+                  href={`/categories/${category.slug}`}
+                  className="text-blue-500 hover:underline"
+                >
+                  {category.name}
+                </Link>
               </li>
             ))}
           </ul>
