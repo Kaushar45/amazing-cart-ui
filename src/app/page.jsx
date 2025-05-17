@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react";
 import { apiClient } from "../utils/apiClient";
 import ProductCard from "./components/Card";
 import Link from "next/link";
+import { useGlobalContext } from "../../context/GlobalContext";
 const HomePage = () => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const { categories } = useGlobalContext();
   const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
@@ -29,28 +30,8 @@ const HomePage = () => {
     }
   };
 
-  const fetchCategories = async () => {
-    setLoading(true);
-    try {
-      const data = await apiClient.fetchCategories();
-      if (data.error) {
-        alert(data.message);
-        setLoading(false);
-        return;
-      }
-      console.log(data);
-      setCategories(data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      alert("Something went wrong");
-    }
-  };
-
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
   }, []);
 
   return (

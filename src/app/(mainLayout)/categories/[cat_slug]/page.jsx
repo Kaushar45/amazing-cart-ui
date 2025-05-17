@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { apiClient } from "../../../../utils/apiClient";
-import ProductCard from "../../../../components/Card";
+import ProductCard from "../../../components/Card";
 
 const CategoryProductsPage = () => {
   const { cat_slug } = useParams();
@@ -32,8 +32,8 @@ const CategoryProductsPage = () => {
     <div className="container mx-auto p-4">
       {products.length ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {products.map((product) => (
-            <ProductCard product={product} key={product.id} />
+          {products.map((product, index) => (
+            <ProductCard product={product} key={index} />
           ))}
         </div>
       ) : (

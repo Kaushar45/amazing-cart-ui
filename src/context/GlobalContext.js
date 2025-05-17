@@ -9,6 +9,7 @@ const GlobalContext = createContext();
 export const GlobalContextProvider = ({ children }) => {
   const router = useRouter();
   const [userProfile, setUserProfile] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [isLogin, setIsLogin] = useState(() => {
     const access_token = getCookie("access_token");
 
@@ -52,6 +53,21 @@ export const GlobalContextProvider = ({ children }) => {
       cosole.log("Error renewing token", error);
     }
   };
+  const fetchCategories = async () => {
+    try {
+      const data = await apiClient.fetchCategories();
+
+      if (data.error) {
+        alert(data.message);
+        return;
+      }
+      console.log(data);
+      setCategories(data);
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
+  };
 
   useEffect(() => {
     const checkLogin = () => {
@@ -80,9 +96,15 @@ export const GlobalContextProvider = ({ children }) => {
     return () => clearInterval(loginInterval);
   }, [isLogin]);
 
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const value = {
     isLogin,
     setIsLogin,
+    categories,
+    setCategories,
     userProfile,
     setUserProfile,
   };

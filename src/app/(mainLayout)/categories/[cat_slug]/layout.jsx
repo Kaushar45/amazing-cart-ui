@@ -3,13 +3,13 @@ import Link from "next/link";
 import { apiClient } from "../../../../utils/apiClient";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-
+import { useGlobalContext } from "../../../../context/GlobalContext";
 const catLayout = ({ children }) => {
   const { cat_slug } = useParams();
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState({});
   const [attributes, setAttributes] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const { categories } = useGlobalContext();
 
   const fetchCatAttributes = async (id) => {
     setLoading(true);
@@ -49,34 +49,13 @@ const catLayout = ({ children }) => {
     }
   };
 
-  const fetchCategories = async () => {
-    setLoading(true);
-    try {
-      const data = await apiClient.fetchCategories();
-
-      if (data.error) {
-        alert(data.message);
-        setLoading(false);
-        return;
-      }
-      console.log(data);
-      setCategories(data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      alert("Something went wrong");
-    }
-  };
-
   useEffect(() => {
     getCategoryDetails(cat_slug);
-    fetchCategories();
   }, []);
 
   return (
     <div>
-      <aside className="fixed top-16 left-0 bottom-0 w-96 overflow-y-auto bg-red-100 h-screen p-5">
+      <aside className="fixed top-16 left-0 bottom-0 w-76 overflow-y-auto bg-red-50 h-screen p-5">
         <div className="mb-5 border-b-2 border-gray-300 pb-5">
           <h1 className="text-2xl font-semibold mb-2">Categories</h1>
           {loading ? (
@@ -123,7 +102,7 @@ const catLayout = ({ children }) => {
           </ul>
         )}
       </aside>
-      <main className="ml-96">
+      <main className="ml-76">
         <div className="container mx-auto p-4">
           <h1 className="text-2xl font-semibold mb-4">{category.name}</h1>
         </div>
