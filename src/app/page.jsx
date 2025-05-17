@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { apiClient } from "../utils/apiClient";
 import ProductCard from "./components/Card";
 import Link from "next/link";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../context/GlobalContext";
 const HomePage = () => {
   const [products, setProducts] = useState([]);
   const { categories } = useGlobalContext();
