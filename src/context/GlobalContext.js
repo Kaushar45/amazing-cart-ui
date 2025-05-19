@@ -8,6 +8,7 @@ const GlobalContext = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
   const router = useRouter();
+  const [cart, setCart] = useState([]);
   const [userProfile, setUserProfile] = useState(null);
   const [categories, setCategories] = useState([]);
   const [isLogin, setIsLogin] = useState(() => {
@@ -20,6 +21,19 @@ export const GlobalContextProvider = ({ children }) => {
     return true;
   });
 
+  const fetchMyCart = async () => {
+    try {
+      const data = await apiClient.fetchMyCart();
+      if (data.error) {
+        alert(data.message);
+        return;
+      }
+      console.log("My Cart", data);
+      setCart(data.items);
+    } catch (error) {
+      console.log("Error fetching cart", error);
+    }
+  };
   const fetchMyProfile = async () => {
     try {
       const data = await apiClient.fetchMyProfile();
@@ -98,6 +112,7 @@ export const GlobalContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchCategories();
+    fetchMyCart();
   }, []);
 
   const value = {
@@ -107,6 +122,8 @@ export const GlobalContextProvider = ({ children }) => {
     setCategories,
     userProfile,
     setUserProfile,
+    cart,
+    setCart,
   };
 
   return (
