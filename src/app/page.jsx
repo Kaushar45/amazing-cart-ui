@@ -38,16 +38,16 @@ const HomePage = () => {
     <>
       <div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {products.map((product) => (
-            <ProductCard product={product} key={product.id} />
+          {products.map((product, index) => (
+            <ProductCard product={product} key={index} />
           ))}
         </div>
 
         <div>
           <h3 className="text-2xl font-semibold">Categories</h3>
           <ul className="list-disc">
-            {categories.map((category) => (
-              <li key={category.id} className="text-lg">
+            {categories.map((category, index) => (
+              <li key={index} className="text-lg">
                 <Link
                   href={`/categories/${category.slug}`}
                   className="text-blue-500 hover:underline"

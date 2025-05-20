@@ -39,7 +39,7 @@ const catLayout = ({ children }) => {
         setLoading(false);
         return;
       }
-      console.log("cat", data);
+      console.log("category", data);
       fetchCatAttributes(data.id);
       setCategory(data);
       setLoading(false);
