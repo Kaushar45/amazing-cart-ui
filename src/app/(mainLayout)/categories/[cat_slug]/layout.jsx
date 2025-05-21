@@ -34,7 +34,7 @@ const catLayout = ({ children }) => {
     try {
       const data = await apiClient.getCategoryBySlug(cat_slug);
 
-      if (data.error) {
+      if (data.error) { 
         alert(data.message);
         setLoading(false);
         return;

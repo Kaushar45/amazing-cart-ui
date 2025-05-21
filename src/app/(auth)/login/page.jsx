@@ -1,5 +1,6 @@
 "use client";
 
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useGlobalContext } from "../../../context/GlobalContext";
 import React, { useState } from "react";
@@ -13,6 +14,8 @@ import {
 const loginPage = () => {
   const router = useState();
   const { setIsLogin } = useGlobalContext();
+  const searchParams = useSearchParams();
+  console.log(searchParams.get("ref"));
   const [isLoading, setIsLoading] = useState(false);
   const [isPassword, setIsPassword] = useState(true);
   const [validationError, setValidationError] = useState({
@@ -94,7 +97,11 @@ const loginPage = () => {
       setValidationError({ email: "", password: "" });
       setError("");
       setIsLoading(false);
-      router.push("/", { replace: true });
+      if (searchParams.get("ref")) {
+        router.push(searchParams.get("ref"), { replace: true });
+      } else {
+        router.push("/", { replace: true });
+      }
     } catch (error) {
       console.log();
       setIsLoading(false);
