@@ -1,5 +1,5 @@
 import React from "react";
-import ProtectedRoutes from "../../components/ProtectedRoutes";
+import ProtectedRoutes from "../components/ProtectedRoutes";
 
 const AccountLayout = ({ children }) => {
   return (

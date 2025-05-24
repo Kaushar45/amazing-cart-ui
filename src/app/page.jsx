@@ -5,8 +5,8 @@ import { apiClient } from "../utils/apiClient";
 import ProductCard from "./components/Card";
 import Link from "next/link";
 import { useGlobalContext } from "../context/GlobalContext";
-import { discountedPrice, paiseToRupee } from "../../utils/calculation";
-import { ShoppingCart } from "lucide-react";
+import { discountedPrice, paiseToRupee } from "../utils/calculation";
+
 const HomePage = () => {
   const [products, setProducts] = useState([]);
   const { categories } = useGlobalContext();
@@ -52,7 +52,7 @@ const HomePage = () => {
             {categories.map((category, index) => (
               <div
                 className="min-w-52 max-w-52 bg-white rounded-lg shadow-md overflow-hidden"
-                key={category.id}
+                key={index}
               >
                 {/* Product Image */}
                 <div className="flex justify-center items-center">

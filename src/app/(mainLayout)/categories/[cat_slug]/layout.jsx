@@ -4,6 +4,7 @@ import { apiClient } from "../../../../utils/apiClient";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useGlobalContext } from "../../../../context/GlobalContext";
+import { ChevronRight } from "lucide-react";
 const catLayout = ({ children }) => {
   const { cat_slug } = useParams();
   const [loading, setLoading] = useState(true);
@@ -34,7 +35,7 @@ const catLayout = ({ children }) => {
     try {
       const data = await apiClient.getCategoryBySlug(cat_slug);
 
-      if (data.error) { 
+      if (data.error) {
         alert(data.message);
         setLoading(false);
         return;

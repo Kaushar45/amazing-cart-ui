@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../../context/GlobalContext";
 import {
   Popover,
   PopoverBackdrop,

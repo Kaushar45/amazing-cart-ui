@@ -55,43 +55,45 @@ const ForgotPassword = () => {
   return (
     <form
       onSubmit={handleResetPassword}
-      className="grid items-center justify-center max-w-sm w-full rounded border border-gray-400  gap-2 p-4"
+      className="grid items-center justify-center gap-5 h-screen"
     >
-      <h1 className="text-center mb-5 font-semibold text-3xl">
-        Forgot Password
-      </h1>
-      {error && (
-        <p className="text-sm text-red-500 text-center mt-1">{error}</p>
-      )}
-      <input
-        type="email"
-        required
-        value={email}
-        placeholder="Email"
-        className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      {validationError && (
-        <p className="text-sm text-red-500">{validationError}</p>
-      )}
-      <button
-        type="submit"
-        disabled={enableDisableBtn() ? true : false}
-        className={`${
-          enableDisableBtn()
-            ? "bg-gray-300 text-gray-100 "
-            : "bg-[#03335f1d] duration-200 hover:bg-[#13212f1d]"
-        }rounded-2xl cursor-pointer outline-neutral-50 px-4 text-lg flex justify-center items-center`}
-      >
-        {isLoading ? (
-          <svg
-            className="animate-spin h-8 w-8 border-t-transparent border-2 rounded-full"
-            viewBox="0 0 24 24"
-          ></svg>
-        ) : (
-          "Submit"
+      <div className="grid items-center justify-center gap-5 px-6 py-6 rounded-xl  border-1 border-gray-500 bg-[#9595951d] shadow-2xl">
+        <h1 className="text-center mb-5 font-semibold text-3xl">
+          Forgot Password
+        </h1>
+        {error && (
+          <p className="text-sm text-red-500 text-center mt-1">{error}</p>
         )}
-      </button>
+        <input
+          type="email"
+          required
+          value={email}
+          placeholder="Email"
+          className="rounded-2xl px-4 text-lg bg-[#03335f1d] "
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {validationError && (
+          <p className="text-sm text-red-500">{validationError}</p>
+        )}
+        <button
+          type="submit"
+          disabled={enableDisableBtn() ? true : false}
+          className={`${
+            enableDisableBtn()
+              ? "bg-gray-300 text-gray-100 "
+              : "bg-[#03335f1d] duration-200 hover:bg-[#13212f1d]"
+          }rounded-2xl cursor-pointer outline-neutral-50 px-4 text-lg flex justify-center items-center`}
+        >
+          {isLoading ? (
+            <svg
+              className="animate-spin h-8 w-8 border-t-transparent border-2 rounded-full"
+              viewBox="0 0 24 24"
+            ></svg>
+          ) : (
+            "Submit"
+          )}
+        </button>
+      </div>
     </form>
   );
 };

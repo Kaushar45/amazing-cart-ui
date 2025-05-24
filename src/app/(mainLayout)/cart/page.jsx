@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../../../context/GlobalContext";
 import { discountedPrice, paiseToRupee } from "../../../utils/calculation";
-import ProtectedRoutes from "../../../components/ProtectedRoutes";
+import ProtectedRoutes from "../../.../../components/ProtectedRoutes";
 const MyCartPage = () => {
   const { cart } = useGlobalContext();
 

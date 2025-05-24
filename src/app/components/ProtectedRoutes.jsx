@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useGlobalContext } from "../context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext";
 import { useEffect, useState } from "react";
 
 const ProtectedRoutes = ({ children }) => {
