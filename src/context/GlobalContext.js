@@ -67,6 +67,25 @@ export const GlobalContextProvider = ({ children }) => {
       cosole.log("Error renewing token", error);
     }
   };
+
+  const fetchCategoryProducts = async (cat_slug) => {
+    try {
+      const data = await apiClient.getCategoryProductsBySlug(cat_slug);
+
+      if (data.error) {
+        alert(data.message);
+        return;
+      }
+      console.log(data);
+      setCategories((prevState) =>
+        prevState.map((cat) =>
+          cat.slug === cat_slug ? { ...cat, products: data } : cat
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const fetchCategories = async () => {
     try {
       const data = await apiClient.fetchCategories();
@@ -77,6 +96,9 @@ export const GlobalContextProvider = ({ children }) => {
       }
       console.log(data);
       setCategories(data);
+      for (let i = 0; i < data.length; i++) {
+        fetchCategoryProducts(data[i].slug);
+      }
     } catch (error) {
       console.log(error);
       alert("Something went wrong");
