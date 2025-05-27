@@ -6,9 +6,9 @@ import { useGlobalContext } from "../context/GlobalContext";
 // import { apiClient } from "../utils/apiClient";
 // import ProductCard from "./components/Card";
 // import { discountedPrice, paiseToRupee } from "../utils/calculation";
-import Carousel from "../../components/Carousel";
-import ProductSlider from "../../components/ProductSlider";
-import CategorySlider from "../../components/CategorySlider";
+import Carousel from "./components/Carousel";
+import ProductSlider from "./components/ProductSlider";
+import CategorySlider from "./components/CategorySlider";
 
 const HomePage = () => {
   // const [products, setProducts] = useState([]);
@@ -45,28 +45,23 @@ const HomePage = () => {
   ];
   return (
     <div className="p-5">
-      {/* <Carousel slides={images} /> */}
+      <Carousel slides={images} />
       <CategorySlider categories={categories} />
 
       <div>
-        {categories.map((cat) => (
-          <>
-            {cat.products && (
-              <>
-                {cat.products.length > 0 && (
-                  <div>
-                    <h3 className="mt-5 font-medium text-2xl">{cat.name}</h3>
-
-                    <div className="mt-4">
-                      <ProductSlider products={cat.products} />
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-          </>
-        ))}
+        {categories
+          .filter((cat) => cat.products && cat.products.length > 0)
+          .map((cat) => (
+            <div key={cat.id || cat.name}>
+              {" "}
+              <h3 className="mt-5 font-medium text-2xl">{cat.name}</h3>
+              <div className="mt-4">
+                <ProductSlider products={cat.products} />
+              </div>
+            </div>
+          ))}
       </div>
+
       {/* {loading && (
         <div className="flex items-center justify-center bg-white fixed inset-0 z-10 h-screen w-full">
           <div className="relative">

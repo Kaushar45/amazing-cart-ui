@@ -4,7 +4,8 @@ import { apiClient } from "../../../../utils/apiClient";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useGlobalContext } from "../../../../context/GlobalContext";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Menu } from "lucide-react";
+
 const catLayout = ({ children }) => {
   const { cat_slug } = useParams();
   const [loading, setLoading] = useState(true);
@@ -52,11 +53,33 @@ const catLayout = ({ children }) => {
 
   useEffect(() => {
     getCategoryDetails(cat_slug);
+
+    if (window !== undefined && window.innerWidth > 768) {
+      setIsDrawerOpen(true);
+    }
+
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsDrawerOpen(false);
+      } else {
+        setIsDrawerOpen(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
     <div>
-      <aside className="fixed top-16 left-0 bottom-0 w-76 overflow-y-auto bg-red-50 h-screen p-5">
+      <aside
+        className={`${
+          isDrawerOpen ? "w-96 p-5" : "w-0 p-0"
+        } fixed top-16 left-0 bottom-0 overflow-y-auto bg-red-100 h-screen transition-all duration-500`}
+      >
         <div className="mb-5 border-b-2 border-gray-300 pb-5">
           <h1 className="text-2xl font-semibold mb-2">Categories</h1>
           {loading ? (
@@ -103,10 +126,15 @@ const catLayout = ({ children }) => {
           </ul>
         )}
       </aside>
-      <main className="ml-76">
-        <div className="container mx-auto p-4">
+      <main
+        className={`${
+          isDrawerOpen ? "ml-96" : "ml-0"
+        } transition-all duration-500`}
+      >
+        <div className="p-4">
           {categories.length ? (
             <div className="inline-flex items-center gap-2">
+              <Menu onClick={() => setIsDrawerOpen(!isDrawerOpen)} />
               <span className="text-sm text-gray-500">Categories</span>
               <ChevronRight size={15} className="inline-block" />
 
@@ -114,7 +142,9 @@ const catLayout = ({ children }) => {
                 {loading ? (
                   <span className="h-6 bg-gray-300 animate-pulse rounded"></span>
                 ) : (
-                  <span className="font-medium">{category.name}</span>
+                  <span className="font-medium whitespace-nowrap">
+                    {category.name}
+                  </span>
                 )}
               </p>
             </div>

@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Autoplay, Scrollbar } from "swiper/modules";
-import { discountedPrice, paiseToRupee } from "../utils/calculation";
+import { discountedPrice, paiseToRupee } from "../../utils/calculation";
 const ProductSlider = ({ products }) => {
   return (
     <Swiper
@@ -52,7 +52,7 @@ const ProductSlider = ({ products }) => {
             </div>
 
             {/* Product Details */}
-            <div className="p-4 bg-green-50">
+            <div className="p-4 bg-blue-100">
               <Link
                 href={`/products/${product.slug}`}
                 className="line-clamp-1 text-sm font-medium text-gray-800"
