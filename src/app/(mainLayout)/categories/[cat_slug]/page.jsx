@@ -34,10 +34,10 @@ const CategoryProductsPage = () => {
     <div className="p-4">
       {products.length ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {products.map((product, index) => (
+          {products.map((product) => (
             <div
               className="bg-white rounded-xl shadow overflow-hidden"
-              key={product.id}
+              key={product.id || product.slug}
             >
               {/* Product Image */}
               <div className="relative">
@@ -53,7 +53,7 @@ const CategoryProductsPage = () => {
               </div>
 
               {/* Product Details */}
-              <div className="p-4 bg-green-50">
+              <div className="p-4 bg-blue-50">
                 <Link
                   href={`/products/${product.slug}`}
                   className="line-clamp-1 text-sm font-medium text-gray-800"

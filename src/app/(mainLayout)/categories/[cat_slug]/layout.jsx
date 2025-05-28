@@ -6,7 +6,8 @@ import { useParams } from "next/navigation";
 import { useGlobalContext } from "../../../../context/GlobalContext";
 import { ChevronRight, Menu } from "lucide-react";
 
-const catLayout = ({ children }) => {
+const CatLayout = ({ children }) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { cat_slug } = useParams();
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState({});
@@ -78,10 +79,10 @@ const catLayout = ({ children }) => {
       <aside
         className={`${
           isDrawerOpen ? "w-96 p-5" : "w-0 p-0"
-        } fixed top-16 left-0 bottom-0 overflow-y-auto myscrollbar bg-green-50 h-screen transition-all duration-500`}
+        } fixed top-16 left-0 bottom-0 overflow-y-auto myscrollbar bg-blue-50 h-screen transition-all duration-500`}
       >
         <div className="mb-5 border-b-2 border-gray-300 pb-5">
-          <h1 className="text-2xl text-green-800 font-semibold mb-2">
+          <h1 className="text-2xl text-blue-800 font-semibold mb-2">
             Categories
           </h1>
           {loading ? (
@@ -120,11 +121,17 @@ const catLayout = ({ children }) => {
           <ul className="flex flex-col gap-2">
             {attributes.map((attr) => (
               <li key={attr.id}>
-                <p className="text-green-800">{attr.name}</p>
+                <p className="text-blue-800">{attr.name}</p>
                 {attr.values.map((value) => (
-                  <div className="flex items-center gap-2 mt-1">
-                    <input id={value} type="checkbox" />
-                    <label htmlFor={value} className="cursor-pointer">
+                  <div
+                    key={`${attr.id}-${value}`}
+                    className="flex items-center gap-2 mt-1"
+                  >
+                    <input id={`${attr.id}-${value}`} type="checkbox" />
+                    <label
+                      htmlFor={`${attr.id}-${value}`}
+                      className="cursor-pointer"
+                    >
                       {value}
                     </label>
                   </div>
@@ -166,4 +173,4 @@ const catLayout = ({ children }) => {
   );
 };
 
-export default catLayout;
+export default CatLayout;
